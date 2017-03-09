@@ -1,5 +1,18 @@
 #Android Custom View Examples#
 
+1. Compound Views 
+
+    Android explanation about the concept of compound views:
+    "If you don't want to create a completely customized component, but instead are looking to put together 
+    a reusable component that consists of a group of existing controls, then creating a Compound Component 
+    (or Compound Control) might fit the bill. In a nutshell, this brings together a number of more atomic 
+    controls (or views) into a logical group of items that can be treated as a single thing."
+    Resource: https://developer.android.com/guide/topics/ui/custom-components.html
+    
+    Samples include in the project:
+    
+    * Like selector compound view.
+     
 ##License##
 
 **The code supplied here is covered under the MIT Open Source License:**
