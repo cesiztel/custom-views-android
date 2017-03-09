@@ -3,6 +3,8 @@ package com.example.cesiztel.custom_views.widgets;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -14,11 +16,17 @@ import android.widget.TextView;
 import com.example.cesiztel.custom_views.R;
 
 public class CounterSelector extends LinearLayout {
+    private static final String COUNTER_STATE_INDEX="counter_state";
+
+    private static final String STATE_SUPER_INDEX="super_class";
+
     private Drawable mDrawableDown;
     private Drawable mDrawableUp;
     private ImageView mUp;
     private ImageView mDown;
     private TextView mCounter;
+
+    private int mCurrentCounter;
 
     public CounterSelector(Context context) {
         super(context);
@@ -85,20 +93,43 @@ public class CounterSelector extends LinearLayout {
         mUp.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                int likes = Integer.valueOf(mCounter.getText().toString());
-                likes++;
-                mCounter.setText(String.valueOf(likes));
+                mCurrentCounter++;
+                mCounter.setText(String.valueOf(mCurrentCounter));
             }
         });
 
         mDown.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                int likes = Integer.valueOf(mCounter.getText().toString());
-                if(likes == 0) return;
-                likes--;
-                mCounter.setText(String.valueOf(likes));
+                if(mCurrentCounter == 0) return;
+                mCurrentCounter--;
+                mCounter.setText(String.valueOf(mCurrentCounter));
             }
         });
+    }
+
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        Bundle bundle = new Bundle();
+
+        bundle.putParcelable(STATE_SUPER_INDEX,
+                super.onSaveInstanceState());
+        bundle.putInt(COUNTER_STATE_INDEX, mCurrentCounter);
+
+        return bundle;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        if(state instanceof Bundle) {
+            Bundle bundle = (Bundle) state;
+
+            super.onRestoreInstanceState(bundle.getParcelable(STATE_SUPER_INDEX));
+
+            mCurrentCounter = bundle.getInt(COUNTER_STATE_INDEX);
+            mCounter.setText(String.valueOf(mCurrentCounter));
+        } else {
+            super.onRestoreInstanceState(state);
+        }
     }
 }
