@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CounterSelector">
+        <attr name="drawableUp" format="integer"/>
+        <attr name="drawableDown" format="integer"/>
+    </declare-styleable>
+</resources>
